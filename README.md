@@ -1,66 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Timeline App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Timeline App est une application web de type réseau social construite avec Laravel. Les utilisateurs peuvent créer des comptes, écrire des posts, aimer/ne plus aimer des posts et afficher une timeline de tous les posts.
 
-## About Laravel
+## Fonctionnalités
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Authentification avec Laravel Breeze
+- Création, affichage et pagination des posts
+- Aimer et ne plus aimer des posts
+- Interface utilisateur construite avec Tailwind CSS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prérequis
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 
-## Learning Laravel
+- PHP >= 8.0
+- Composer
+- Node.js avec npm
+- MySQL ou un autre système de gestion de base de données
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clonez le dépôt du projet :
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    git clone <url-du-depot>
+    cd timeline-app
+    ```
 
-## Laravel Sponsors
+2. Installez les dépendances PHP avec Composer :
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    composer install
+    ```
 
-### Premium Partners
+3. Installez les dépendances JavaScript avec npm :
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    npm install
+    ```
 
-## Contributing
+4. Copiez le fichier `.env.example` en `.env` :
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    cp .env.example .env
+    ```
 
-## Code of Conduct
+5. Générez une clé d'application Laravel :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    php artisan key:generate
+    ```
 
-## Security Vulnerabilities
+6. Configurez les paramètres de votre base de données dans le fichier `.env` :
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nom_de_votre_base_de_donnees
+    DB_USERNAME=nom_utilisateur
+    DB_PASSWORD=mot_de_passe
+    ```
 
-## License
+7. Lancer les migrations pour créer les tables :
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    php artisan migrate
+    ```
+
+8. Compiler les assets avec Laravel Mix :
+
+    ```bash
+    npm run dev
+    ```
+
+## Utilisation
+
+1. Démarrez le serveur de développement Laravel :
+
+    ```bash
+    php artisan serve
+    ```
+
+2. Accédez à l'application dans votre navigateur à l'adresse `http://127.0.0.1:8000`.
+
+3. Créez un compte, connectez-vous et commencez à utiliser l'application.
+
+## Routes
+
+- `/` : Redirige vers `/posts` si l'utilisateur est connecté, sinon vers `/login`.
+- `/posts` : Affiche la timeline des posts.
+- `/profile` : Page de profil utilisateur.
+- `/dashboard` : Tableau de bord utilisateur.
+
+## Développement
+
+### PostController
+
+Le contrôleur `PostController` gère les opérations CRUD pour les posts ainsi que les actions de like et unlike. Voici un extrait du code du contrôleur :
+
+```php
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+        $posts = Post::with('user')->latest()->paginate(10);
+        return view('posts.index', compact('posts'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'body' => 'required|max:180',
+        ]);
+
+        $post = new Post([
+            'body' => $request->body,
+        ]);
+        $request->user()->posts()->save($post);
+
+        return redirect()->route('posts.index');
+    }
+
+    public function like(Post $post)
+    {
+        if (!$post->isLikedBy(Auth::user())) {
+            $post->likes()->attach(Auth::id());
+        }
+        return back();
+    }
+
+    public function unlike(Post $post)
+    {
+        if ($post->isLikedBy(Auth::user())) {
+            $post->likes()->detach(Auth::id());
+        }
+        return back();
+    }
+}
