@@ -1,24 +1,24 @@
-# Timeline App
+# 📅 Timeline App
 
-Timeline App est une application web de type réseau social construite avec Laravel. Les utilisateurs peuvent créer des comptes, écrire des posts, aimer/ne plus aimer des posts et afficher une timeline de tous les posts.
+Timeline App est une application web de type réseau social construite avec Laravel. Les utilisateurs peuvent créer des comptes, écrire des posts, aimer/ne plus aimer des posts et afficher une timeline de tous les posts. 🚀
 
-## Fonctionnalités
+## ✨ Fonctionnalités
 
-- Authentification avec Laravel Breeze
-- Création, affichage et pagination des posts
-- Aimer et ne plus aimer des posts
-- Interface utilisateur construite avec Tailwind CSS
+- 🔐 Authentification avec Laravel Breeze
+- 📝 Création, affichage et pagination des posts
+- ❤️ Aimer et ne plus aimer des posts
+- 🎨 Interface utilisateur construite avec Tailwind CSS
 
-## Prérequis
+## 🛠️ Prérequis
 
 Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 
-- PHP >= 8.0
-- Composer
-- Node.js avec npm
-- MySQL ou un autre système de gestion de base de données
+- 🐘 PHP >= 8.0
+- 🎼 Composer
+- 🌐 Node.js avec npm
+- 🗄️ MySQL ou un autre système de gestion de base de données
 
-## Installation
+## ⚙️ Installation
 
 1. Clonez le dépôt du projet :
 
@@ -74,7 +74,7 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
     npm run dev
     ```
 
-## Utilisation
+## 🚀 Utilisation
 
 1. Démarrez le serveur de développement Laravel :
 
@@ -86,61 +86,12 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 
 3. Créez un compte, connectez-vous et commencez à utiliser l'application.
 
-## Routes
+## 🌐 Routes
 
 - `/` : Redirige vers `/posts` si l'utilisateur est connecté, sinon vers `/login`.
 - `/posts` : Affiche la timeline des posts.
 - `/profile` : Page de profil utilisateur.
 - `/dashboard` : Tableau de bord utilisateur.
 
-## Développement
+## 🔧 Développement
 
-### PostController
-
-Le contrôleur `PostController` gère les opérations CRUD pour les posts ainsi que les actions de like et unlike. Voici un extrait du code du contrôleur :
-
-```php
-namespace App\Http\Controllers;
-
-use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class PostController extends Controller
-{
-    public function index()
-    {
-        $posts = Post::with('user')->latest()->paginate(10);
-        return view('posts.index', compact('posts'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'body' => 'required|max:180',
-        ]);
-
-        $post = new Post([
-            'body' => $request->body,
-        ]);
-        $request->user()->posts()->save($post);
-
-        return redirect()->route('posts.index');
-    }
-
-    public function like(Post $post)
-    {
-        if (!$post->isLikedBy(Auth::user())) {
-            $post->likes()->attach(Auth::id());
-        }
-        return back();
-    }
-
-    public function unlike(Post $post)
-    {
-        if ($post->isLikedBy(Auth::user())) {
-            $post->likes()->detach(Auth::id());
-        }
-        return back();
-    }
-}
