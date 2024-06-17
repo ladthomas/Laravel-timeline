@@ -1,4 +1,4 @@
-<!-- resources/views/posts/index.blade.php -->
+
 @extends('layouts.app')
 
 @section('content')

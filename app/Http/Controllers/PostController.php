@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/PostController.php
 
 namespace App\Http\Controllers;
 

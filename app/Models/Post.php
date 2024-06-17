@@ -1,6 +1,5 @@
 <?php
 
-// app/Models/Post.php
 
 namespace App\Models;
 
